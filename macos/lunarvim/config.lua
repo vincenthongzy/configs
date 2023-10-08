@@ -21,11 +21,13 @@ vim.opt.showcmd = true
 lvim.keys.insert_mode["jk"] = "<ESC>"
 -- https://salferrarello.com/vim-close-all-buffers-except-the-current-one/
 vim.cmd("command! CloseOthers silent! execute '%bdelete|edit #| bd# | normal `\"'")
-lvim.keys.insert_mode["<leader>bd"] = "<ESC>:CloseOthers<cr><cr>"
 lvim.keys.normal_mode["<leader>bd"] = ":CloseOthers<cr>"
 -- lsp
 -- https://github.com/LunarVim/LunarVim/discussions/3847
 -- typescript.nvim provides vscode like code actions as well
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+  return server ~= "eslint"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" })
 local capabilities = require("lvim.lsp").common_capabilities()
 local common_on_attach = require("lvim.lsp").common_on_attach
@@ -157,10 +159,10 @@ lvim.builtin.telescope.defaults.results_title = 'Results'
 require("telescope").load_extension("ui-select")
 
 -- typescript
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {
-  { exe = "eslint_d", filetypes = { "typescript", "typescriptreact" } }
-}
+-- local linters = require "lvim.lsp.null-ls.linters"
+-- linters.setup {
+--   { exe = "eslint_d", filetypes = { "typescript", "typescriptreact" } }
+-- }
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
@@ -169,13 +171,13 @@ formatters.setup {
     filetypes = { "typescript", "typescriptreact" },
   },
 }
-local code_actions = require "lvim.lsp.null-ls.code_actions"
-code_actions.setup {
-  {
-    exe = "eslint_d",
-    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue" },
-  },
-}
+-- local code_actions = require "lvim.lsp.null-ls.code_actions"
+-- code_actions.setup {
+--   {
+--     exe = "eslint_d",
+--     filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue" },
+--   },
+-- }
 
 -- theme
 local colors = require('catppuccin.palettes').get_palette('mocha')
