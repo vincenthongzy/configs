@@ -114,6 +114,31 @@ null_ls.register({
 vim.diagnostic.config({
   virtual_text = false,
 })
+
+
+-- scuffed project wide diagnostic (work specific)
+ProjectDiagnostics = function()
+  local root_file = vim.fn.expand('%:p:h:h')
+  vim.api.nvim_exec2(
+  -- "compiler tsc | setlocal makeprg=npx\\ tsc\\ --build\\ **\\/\\(services\\\\\\|packages\\)\\/**\\/\\(tsconfig.build.json\\\\\\|tsconfig.json\\) | make",
+    "compiler tsc | setlocal makeprg=npx\\ tsc\\ --build\\ **\\/\\(services\\\\\\|packages\\)\\/**\\/tsconfig.build.json | make",
+    {})
+
+  local tsc_diag = vim.fn.getqflist()
+
+  vim.api.nvim_exec2(
+    string.format("lcd %s | compiler eslint | make %s | silent! redraw", root_file, root_file), {}
+  )
+
+
+  vim.fn.setqflist(tsc_diag, 'a');
+
+  vim.cmd.cwindow();
+end
+
+vim.cmd(
+  "command! SanityCheck lua ProjectDiagnostics()")
+
 -- Show line diagnostics automatically in hover window
 OpenDiagFloat = function()
   for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
