@@ -8,6 +8,7 @@ lvim.plugins = {
   { "sainnhe/gruvbox-material" },
   { "maxmx03/solarized.nvim" },
   { "jose-elias-alvarez/typescript.nvim" },
+  { "nvim-treesitter/nvim-treesitter-textobjects" }
 }
 -- override lvim defaults
 -- monorepo support
@@ -22,6 +23,57 @@ lvim.keys.insert_mode["jk"] = "<ESC>"
 -- https://salferrarello.com/vim-close-all-buffers-except-the-current-one/
 vim.cmd("command! CloseOthers silent! execute '%bdelete|edit #| bd# | normal `\"'")
 lvim.keys.normal_mode["<leader>bd"] = ":CloseOthers<cr>"
+--treesitter enhancement
+--https://github.com/LunarVim/LunarVim/issues/2730
+--https://github.com/kylo252/lvim/blob/main/lua/user/treesitter.lua
+lvim.builtin.treesitter.textobjects.select = {
+  enable = true,
+  lookahead = true,
+  keymaps = {
+    ["af"] = "@function.outer",
+    ["if"] = "@function.inner",
+    ["ac"] = "@class.outer",
+    ["ic"] = "@class.inner",
+    ["ak"] = "@comment.outer",
+    ["aa"] = "@parameter.inner", -- "ap" is already used
+    ["ia"] = "@parameter.outer", -- "ip" is already used
+  }
+}
+lvim.builtin.treesitter.textobjects.move = {
+  enable = true,
+  set_jumps = true, -- whether to set jumps in the jumplist
+  goto_next_start = {
+    ["]m"] = "@function.outer",
+    ["]]"] = "@class.outer",
+    ["]k"] = "@comment.outer",
+  },
+  goto_next_end = {
+    ["]M"] = "@function.outer",
+    ["]["] = "@class.outer",
+    ["]K"] = "@comment.outer",
+  },
+  goto_previous_start = {
+    ["[m"] = "@function.outer",
+    ["[["] = "@class.outer",
+    ["[k"] = "@comment.outer",
+  },
+  goto_previous_end = {
+    ["[M"] = "@function.outer",
+    ["[]"] = "@class.outer",
+    ["[K"] = "@comment.outer",
+  },
+}
+lvim.builtin.treesitter.textobjects.lsp_interop = {
+  enable = true,
+  border = "rounded",
+  peek_definition_code = {
+    ["gpof"] = "@function.outer",
+    ["gpoc"] = "@class.outer",
+  },
+}
+
+
+
 -- lsp
 -- https://github.com/LunarVim/LunarVim/discussions/3847
 -- typescript.nvim provides vscode like code actions as well
