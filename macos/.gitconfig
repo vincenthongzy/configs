@@ -1,9 +1,13 @@
 [user]
 	name = Zheng You Hong
 	email = 107991825+vincenthongzy@users.noreply.github.com
+[commit]
+	gpgsign = true
 [pull]
 	rebase = true
 [fetch]
 	prune = true
 [diff]
 	colorMoved = zebra
+[core]
+	editor = lvim
