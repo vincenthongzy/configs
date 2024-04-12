@@ -14,7 +14,14 @@ lvim.plugins = {
 -- monorepo support
 lvim.builtin.project.patterns = { ">Projects", ".git" }
 lvim.format_on_save = true
-lvim.builtin.which_key.setup.plugins.presets.z = true
+lvim.builtin.which_key.setup.plugins = {
+  marks = true,
+  registers = true,
+  presets = {
+    z = true,
+    g = true,
+  }
+}
 vim.opt.foldmethod = "indent" -- default is "normal"
 vim.opt.foldenable = false
 vim.opt.showcmd = true
@@ -104,7 +111,6 @@ require("typescript").setup({
     --   },
     -- },
     capabilities = capabilities,
-    root_dir = require("lspconfig").util.root_pattern(".git"),
   },
 })
 local null_ls = require("null-ls")
@@ -191,7 +197,8 @@ local custom_solarized_without_bold = {
   normal = {
     a = { fg = colors.base03, bg = colors.blue },
     b = { fg = colors.base02, bg = colors.base1 },
-    c = { fg = colors.base1, bg = colors.base02 },
+    -- c = { fg = colors.base1, bg = colors.base02 },
+    c = { fg = colors.base1, bg = 'None' },
     z = { fg = colors.base03, bg = colors.blue },
   },
   insert = {
