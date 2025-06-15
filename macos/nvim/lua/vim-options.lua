@@ -8,7 +8,7 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 vim.keymap.set('n', "<M-Up>", ":resize +2<CR>", {desc = "Resize with arrows"})
 vim.keymap.set('n', "<M-Down>", ":resize -2<CR>", {desc = "Resize with arrows"})
 vim.keymap.set('n', "<M-Left>", ":vertical resize -2<CR>", {desc = "Resize with arrows"})
-vim.keymap.set('n', "<M-Rigt>", ":vertical resize +2<CR>", {desc = "Resize with arrows"})
+vim.keymap.set('n', "<M-Right>", ":vertical resize +2<CR>", {desc = "Resize with arrows"})
 vim.keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode" })
 
 -- Built-in commenting available for neovim v0.10. Ref https://tinyurl.com/vd7tcahk

@@ -1,3 +1,4 @@
+-- none-ls bridges the gap between other tooling with a LSP-like interface
 return {
 	"nvimtools/none-ls.nvim",
 	dependencies = {
