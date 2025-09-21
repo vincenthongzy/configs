@@ -16,21 +16,12 @@ COLOR_GIT=$'%F{green}'
 setopt PROMPT_SUBST
 export PROMPT='${COLOR_USR}%n ${COLOR_DIR}%2~ ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}$ '
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # pg14 utilities without db
-export PG15_DIR="/Users/zhengyou.hong/Desktop/postgres/v15/bin"
+export PG15_DIR="/Users/zhengyh/Desktop/postgres/v15/bin"
 export PATH="$PG15_DIR:$PATH"
  
-# asdf
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-# add nvim and lvim to path
-export PATH="/Users/zhengyou.hong/Desktop/nvim-macos/bin:$PATH"
-export PATH="/Users/zhengyou.hong/.local/bin:$PATH"
-alias nvim="/Users/zhengyou.hong/kitty-remove-padding-lvim.sh"
+# add nvim
+export PATH="/Users/zhengyh/Desktop/nvim_0.10/bin:$PATH"
 
 # bash completion
 if type brew &>/dev/null
@@ -43,9 +34,16 @@ fi
 
 export GPG_TTY=$(tty)
 
-# autocomplete for pnpm etc
-# tabtab source for packages
-# uninstall by removing these lines
-[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+# to edit commands inline
+export EDITOR="$HOME/nvim-kitty-wrapper.sh"
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
 
+eval "$(~/.local/bin/mise activate zsh)"
 
+source <(fzf --zsh)
+
+# don't use shell alias to replace cd with z
+eval "$(zoxide init --cmd cd zsh)"
