@@ -47,3 +47,12 @@ source <(fzf --zsh)
 
 # don't use shell alias to replace cd with z
 eval "$(zoxide init --cmd cd zsh)"
+
+# yazi switch to selected directory or Q to exit without cwd
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
